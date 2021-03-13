@@ -1,0 +1,28 @@
+Express
+  npm i express dotenv
+
+  dotenv sirve para cargar nuestras variables de entorno
+
+Instalacion de dependencias de desarrollo 
+  npm i -D nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier
+
+  npx mrm lint-staged
+    Este es un hook que permite hacer el formateo automático cuando detecte nuevos commits. 
+
+REST APIs
+  REST (Representational State Transfer) es un estilo de arquitectura para construir web services, no   es un estándar pero si una especificación muy usada.
+
+  Las peticiones HTTP van acompañadas de un “verbo” que define el tipo de petición:
+
+    GET. Lectura de datos.
+    PUT. Reemplazar datos.
+    PATCH. Actualizar datos en un recurso específico.
+    POST. Creación de datos.
+    DELETE. Eliminación de datos.
+    No es recomendable habilitar un endpoint de tipo PUT y DELETE para toda nuestra colección de datos, sólo hacerlos para recursos específicos, ya que no queremos que por error se puedan borrar todos nuestros datos.
+
+Implementando CRUD en Express
+  Create
+  Read
+  Update
+  Delete
