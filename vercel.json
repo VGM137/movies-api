@@ -7,8 +7,8 @@
   ],
   "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.js"
+      "srs": "/(.*)",
+      "dest": "/index.js"
     }
   ],
   "env": {
