@@ -26,3 +26,98 @@ Implementando CRUD en Express
   Read
   Update
   Delete
+
+Implementando una capa de servicios
+  Clean architecture tiene como esencia la división de capas de nuestro proyecto, una forma de simplificar este concepto es dividiéndolo en controladores, servicios y librerías:
+    Los controladores usan la capa de Middleware y del Router para hacer llamados a APIs y envían o reciben .JSON. Los controladores no llaman otros controladores, solo llaman servicios.
+
+    La capa de servicios es el corazón de nuestro proyecto y es donde está la lógica de negocio. Los servicios pueden llamar otros servicios y librerías.
+
+    Las librerías son la capa que está adjunta a librerías externas como bases de datos, bases de datos en la nube u otras APIs.
+
+Diferencia entre params y query
+  params: están establecidos en la url: '/:movieId'
+  query: en este caso se usa el signo de pregunta, el nombre del query y se puede concatenar.
+
+Mongo DB
+  Es un sistema de bases de datos NoSQL (Not only Structured Query Language o no relacional).
+  La URI (Uniform Resource Identifier) de Mongo DB lleva la estructura: usuariod e bases de datos, password, host y nombre que se representarán en variables de entorno.
+
+  MongoDB Atlas es una servicio de bases de datos en la nube, para crear una base de datos hay que tener un usuario y una contraseña, se recomienda configurar el acceso limitando las direcciones IP desde las cuales se puede entrar. Para conectar las bases de datos con nuestro proyecto hay que instalar el siguiente paquete:
+      
+      npm i mongodb 
+
+      El archivo .env.example es necesario para que cualqueir otro desarrollador sepa cuales son las variables que deben ser alimentadas localmente.
+
+      El archivo .env es el que va a tener las variables de entorno y va a ser alimentada por el archivo de configuración. Este no debe ser subido a ningún repositorio.
+
+Middlewares
+  Un middlewares una pieza de software que está en medio de otras dos, se le suele describir como software glue porque ayuda a conectar dos elementos de software.
+
+  En express los middlewares es mediante la sigueinte sintaxis:
+
+    function(req, res, next){
+      next()
+    }
+  
+  En donde:
+    req es el requerimeinto HTTP
+    res es la respuesta del requerimiento
+    next es el callback argument
+
+  Para crear una capa de manejo de errores hay que agregar un 4to parámetro que es el parámetro del error.
+
+Joi y Boom
+  Estas son tecnologías del ecosistema de hapijs, se pueden integrar como middleware.
+
+  Joi
+    Es un objeto de schema validation
+
+      instalación: npm i @hapi/boom
+
+  Boom  
+    Es un manejador de errores.
+      
+      instalación: npm i @hapi/joi
+
+Test
+  Instalación de dependencias para los tests:
+    mocha: nos ayuda a correr los test
+    supertest: levanta un servidor temporal
+    sinon: crea mocks para tests
+    proxyquire: inyecta los mocks cuando se requieren los paquetes
+
+      npm i -D mocha supertest sinon proxyquire
+
+  Coverage
+    Este comando nos permite identificar donde estamos fallando al probar todos los caminos de una funcionalidad al hacer test.
+
+    Instalación de nyc, esta herramienta forma parte de Istambul
+      npm i -D nyc
+
+Cache
+  El cache solo debe ser agregado a las rutas en donde estamos requiriendo recursos.  
+
+Docker
+  Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de virtualización de aplicaciones en múltiples sistemas operativos.1​Docker utiliza características de aislamiento de recursos del kernel Linux, tales como cgroups y espacios de nombres (namespaces) para permitir que "contenedores" independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.2
+
+  Crear una imagen de nuestra aplicación
+    docker build -t movies-api .
+
+  Ejecutar nuestra imagen en modo detach
+    docker run -d movies-api
+
+Vercel
+  Antes llamado Now, es una plataforma serverless que permite hacer despliegues de sitios y aplicaciones estáticas. 
+
+  Instalación
+    npm i -g Vercel
+
+  Correr localmente
+    vercel dov
+
+  Hacer despliegue  
+    vercel
+
+  Cambiar dominio
+    vercel alias <url-actual> <alias>
