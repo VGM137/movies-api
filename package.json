@@ -44,7 +44,7 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix"
   },
-  "nyc":{
+  "nyc": {
     "all": true,
     "include": [
       "routes",
