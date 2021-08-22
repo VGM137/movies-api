@@ -1,0 +1,9 @@
+Passport
+  Passport.js es un middleware para express que nos permite implementar estrategias de autenticación de una manera rápida y simple.
+
+  Instalación
+    npm i passport jsonwebtoken passport-http passport-jwt
+
+    npm i -D chalk
+
+  La estrategia Basic nos permite autenticar si el usuario existe o no 
