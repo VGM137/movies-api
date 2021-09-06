@@ -48,6 +48,7 @@ function userMovieApi(app) {
         const createdUserMovieId = await userMoviesService.createUserMovie({
           userMovie
         });
+        console.log(createdUserMovieId)
 
         res.status(201).json({
           data: createdUserMovieId,
@@ -62,7 +63,7 @@ function userMovieApi(app) {
     '/:userMovieId', 
     passport.authenticate('jwt', { session: false }), 
     scopesValidationHandler(['delete:user-movies']),
-    validationHandler({ userMovieId: movieIdScheme }, 'params',
+    validationHandler({ userMovieId: movieIdScheme }, 'params'),
     async function(req, res, next){
       const { userMovieId } = req.params;
 
@@ -78,9 +79,7 @@ function userMovieApi(app) {
       }catch(error){
         next(error)
       }
-      }
-    )
-  );
-}
+    });
+  }
 
 module.exports = userMovieApi;

@@ -7,3 +7,7 @@ Passport
     npm i -D chalk
 
   La estrategia Basic nos permite autenticar si el usuario existe o no 
+
+  Instalación de passport-oauth
+  
+     npm i passport-oaut

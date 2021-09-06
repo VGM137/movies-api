@@ -6,8 +6,8 @@ const { userIdScheme } = require('./users');
 const userMovieIdScheme = joi.string().regex(/^[0-9a-fA-F]{24}$/);
 
 const createUserMovieScheme = {
-  userId: userIdScheme,
-  movieId: movieIdScheme
+  userId: userIdScheme.required(),
+  movieId: movieIdScheme.required()
 };
 
 module.exports = {

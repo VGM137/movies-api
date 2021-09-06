@@ -6,7 +6,7 @@ const ApiKeyService = require('../services/apiKeys');
 const UsersService = require('../services/users');
 const validationHandler = require('../utils/middlewares/validationHandler');
 
-const { createUserScheme } = require('../utils/schemes/users');
+const { createUserScheme, createProviderUserScheme } = require('../utils/schemes/users');
 
 const { config } = require('../config');
 /* const UsersService = require('../services/users'); */
@@ -30,6 +30,7 @@ function authApi(app) {
 
     passport.authenticate('basic', function(error, user){
       console.log('Autenticating')
+      console.log(`This is user: ${user}`)
       console.log(user)
       try {
         if (error || !user){
@@ -43,6 +44,7 @@ function authApi(app) {
           }
           
           const apiKey = await apiKeyService.getApiKey({ token: apiKeyToken });
+          console.log(`This is apiKey: ${apiKey}`)
           console.log(apiKey)
           
           if(!apiKey){
@@ -89,6 +91,42 @@ function authApi(app) {
         message: 'User created'
       })
     } catch (error) {
+      next(error)
+    }
+  })
+
+  router.post('/sign-provider', validationHandler(createProviderUserScheme), async function(req, res, next){
+    const { body } = req;
+
+    const { apiKeyToken, ...user } = body;
+
+    if(!apiKeyToken){
+      next(boom.unauthorized('apiKeyToken required'))
+    }
+
+    try{
+      const queriedUser = await usersService.getOrCreateUser({ user });
+      const apiKey = await apiKeyService.getApiKey({ token: apiKeyToken });
+
+      if(!apiKey){
+        next(boom.unauthorized)
+      }
+
+      const { _id: id, name, email } = queriedUser;
+
+      const payload = {
+        sub: id,
+        name,
+        email,
+        scopes: apiKey.scopes
+      }
+
+      const token = jwt.sign(payload, config.authJwtSecret, {
+        expiresIn: '15m'
+      });
+
+      return res.status(200).json({token, user: { id, name, email }});
+    }catch(error){
       next(error)
     }
   })

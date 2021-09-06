@@ -5,7 +5,7 @@ function scopesValidationHandler(allowedScopes) {
     if(!req.user || (req.user && !req.user.scopes)){
       next(boom.unauthorized('Missing scopes'))
     }
-    console.log(req.user)
+    console.log(req.user.scopes)
 
     const hasAcces = allowedScopes
       .map(allowedScope => req.user.scopes.scopes.includes(allowedScope))

@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet')
 const app = express()
 const debug = require('debug')('app:server')
  
@@ -18,6 +19,8 @@ const notFoundHandler = require('./utils/middlewares/notFoundHandler.js');
 
 // body parser middleware
 app.use(express.json());
+//Helmet por default protege la aplicacion con una configuración predeterminada pero si queremos aplicar propiedades solo hay que ingresar un archivo de configuración entre los parentesis.
+app.use(helmet())
 
 // routes
 authApi(app)
